@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MySuperHero</title>
+    <link rel="stylesheet" href="superhero.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cedarville+Cursive&family=Mali:wght@300&family=Open+Sans:wght@500&family=Pacifico&family=Patrick+Hand&family=Sacramento&display=swap');
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      #main {
+        background: radial-gradient(rgba(0, 0, 0, 0.577), rgba(0, 0, 0, 0.077)),
+          url('https://wallpaperaccess.com/full/1289653.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100vw;
+        height: 115vh;
+      }
+      input {
+        box-sizing: border-box;
+        width: 560px;
+        height: 40px;
+        border: solid rgb(204, 204, 204) 1px;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 10px;
+      }
+      h1 {
+        color: white;
+        font-size: 200px;
+        text-align: center;
+        /* font-family: 'Caveat', cursive; */
+      }
+      #search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      button {
+        padding: 0px;
+        margin: 0px;
+        height: 40px;
+        width: 100px;
+        font-size: 25px;
+        font-family: 'Courier New', Courier, monospace;
+        background-color: rgb(220, 220, 236);
+        color: rgb(15, 21, 21);
+        margin-top: 10px;
+        border-radius: 10px;
+      }
+      #hero {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #add8e6d1;
+        margin: auto;
+        margin-top: 10px;
+        width: 900px;
+        height: 320px;
+        border-radius: 20px;
+      }
+      #hero img {
+        border-radius: 20px;
+        width: 160px;
+        height: 240px;
+        margin-top: 10px;
+      }
+      #hero h3 {
+        color: aliceblue;
+        text-align: center;
+        font-family: 'Caveat', cursive;
+        font-size: 25px;
+      }
+      #side {
+        color: white;
+        padding: 15px;
+        font-family: 'Caveat', cursive;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <h1>
+        Know Your
+        <br />
+        Superhero
+      </h1>
+      <div id="search">
+        <input
+          id="searchvalue"
+          type="text"
+          placeholder="Enter Number from 1 to 100"
+        />
+        <button onclick="heroes()">search</button>
+      </div>
+
+      <div id="data"></div>
+    </div>
+
+    <script>
+      let data = document.getElementById('data')
+      async function heroes() {
+        let searchvalue = document.getElementById('searchvalue')
+        id = searchvalue.value
+        let hero = await fetch(
+          `https://akabab.github.io/superhero-api/api/id/${id}.json`,
+        )
+        hero = await hero.json()
+
+        data.innerHTML = `<div id="hero">
+    <div>
+        <img src=${hero.images.sm} alt="not available">  
+
+        <h3><b>${hero.id} </b></h3>   
+        <h3>${hero.name}</h3>
+    </div>
+
+        <div id="side">
+           <p>Fullname: ${hero.biography.fullName}</p>
+           <p>Place of Birth: ${hero.biography.placeOfBirth}</p>
+           <p>First Appeared in: ${hero.biography.firstAppearance}</p>
+           <p>Intelligence: ${hero.powerstats.intelligence}</p>
+           <p>Strength: ${hero.powerstats.strength}</p>
+           <p>Speed: ${hero.powerstats.speed}</p>
+           <p>Durability: ${hero.powerstats.durability}</p>
+           <p>Power: ${hero.powerstats.power}</p>
+           <p>Combats fought: ${hero.powerstats.combat}</p>
+        </div>`
+      }
+    </script>
+  </body>
+</html>
